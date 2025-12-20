@@ -1,9 +1,9 @@
 #ifndef LINEAR_REGRESSION_H
 #define LINEAR_REGRESSION_H
 
-#include "../../core/matrix.h"
-#include "../../optimizers/optimizer.h"
-#include "../../losses/loss.h"
+#include "matrix.h"
+#include "optimizer.h"
+#include "loss.h"
 #include "supervised_model.h"
 #include <vector>
 

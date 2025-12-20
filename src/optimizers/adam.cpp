@@ -1,4 +1,4 @@
-#include "../../include/optimizers/adam.h"
+#include "adam.h"
 #include <cmath>
 
 Adam::Adam(double lr) : learning_rate(lr) {

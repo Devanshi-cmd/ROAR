@@ -1,8 +1,8 @@
 #ifndef MODEL_FACTORY_H
 #define MODEL_FACTORY_H
 
-#include "../models/model.h"
-#include "../models/supervised/linear_regression.h"
+#include "model.h"
+#include "linear_regression.h"
 
 class ModelFactory {
 public:

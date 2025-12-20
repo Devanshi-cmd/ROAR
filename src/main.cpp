@@ -1,11 +1,11 @@
 #include <iostream>
 #include <limits>
 
-#include "../include/core/matrix.h"
+#include "matrix.h"
 
-#include "../include/factory/model_factory.h"
-#include "../include/factory/optimizer_factory.h"
-#include "../include/factory/loss_factory.h"
+#include "model_factory.h"
+#include "optimizer_factory.h"
+#include "loss_factory.h"
 
 using namespace std;
 

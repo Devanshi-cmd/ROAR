@@ -1,4 +1,4 @@
-#include "../../include/losses/mse.h"
+#include "mse.h"
 
 double MSE::compute(Matrix predictions, Matrix actual) {
     double sum = 0.0;

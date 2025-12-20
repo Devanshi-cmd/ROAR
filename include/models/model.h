@@ -1,9 +1,9 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include "../core/matrix.h"
-#include "../optimizers/optimizer.h"
-#include "../losses/loss.h"
+#include "matrix.h"
+#include "optimizer.h"
+#include "loss.h"
 
 class Model {
 public:

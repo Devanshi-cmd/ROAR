@@ -1,7 +1,7 @@
 #ifndef LOSS_H
 #define LOSS_H
 
-#include "../core/matrix.h"
+#include "matrix.h"
 
 class Loss {
 public:

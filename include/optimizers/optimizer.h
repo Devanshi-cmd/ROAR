@@ -1,7 +1,7 @@
 #ifndef OPTIMIZER_H
 #define OPTIMIZER_H
 
-#include "../core/matrix.h"
+#include "matrix.h"
 
 // Base class for all optimizers
 class Optimizer {

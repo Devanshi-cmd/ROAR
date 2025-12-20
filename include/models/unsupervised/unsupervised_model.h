@@ -1,7 +1,7 @@
 #ifndef UNSUPERVISED_MODEL_H
 #define UNSUPERVISED_MODEL_H
 
-#include "../model.h"
+#include "model.h"
 
 class UnsupervisedModel : public Model {
 public:

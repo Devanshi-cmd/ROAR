@@ -1,11 +1,11 @@
 // src/main.cpp
 #include <iostream>
 #include <random>
-#include "../include/core/matrix.h"
-#include "../include/losses/mse.h"
-#include "../include/losses/mae.h"
-#include "../include/optimizers/adam.h"
-#include "../include/models/supervised/linear_regression.h"
+#include "matrix.h"
+#include "mse.h"
+#include "mae.h"
+#include "adam.h"
+#include "linear_regression.h"
 
 using namespace std;
 

@@ -1,4 +1,4 @@
-#include "../../include/losses/mae.h"
+#include "mae.h"
 #include <cmath>
 
 double MAE::compute(Matrix predictions, Matrix targets) {

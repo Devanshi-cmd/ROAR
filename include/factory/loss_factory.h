@@ -1,8 +1,8 @@
 #ifndef LOSS_FACTORY_H
 #define LOSS_FACTORY_H
 
-#include "../losses/mse.h"
-#include "../losses/mae.h"
+#include "mse.h"
+#include "mae.h"
 
 class LossFactory {
 public:

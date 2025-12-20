@@ -1,4 +1,4 @@
-#include "../../include/core/matrix.h"
+#include "matrix.h"
 #include <iostream>
 #include <random>
 #include <iomanip>

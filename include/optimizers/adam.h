@@ -1,7 +1,7 @@
 #ifndef ADAM_H
 #define ADAM_H
 
-#include "../core/matrix.h"
+#include "matrix.h"
 #include "optimizer.h" 
 class Adam : public Optimizer {
 public:

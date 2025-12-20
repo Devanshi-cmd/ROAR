@@ -1,4 +1,4 @@
-#include "../../../include/models/supervised/linear_regression.h"
+#include "linear_regression.h"
 #include <iostream>
 #include <iomanip>
 using namespace std;

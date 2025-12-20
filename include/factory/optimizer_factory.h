@@ -1,8 +1,8 @@
 #ifndef OPTIMIZER_FACTORY_H
 #define OPTIMIZER_FACTORY_H
 
-#include "../optimizers/sgd.h"
-#include "../optimizers/adam.h"
+#include "sgd.h"
+#include "adam.h"
 
 class OptimizerFactory {
 public:

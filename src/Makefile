@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -I../include
+CXXFLAGS = -std=c++17 -Wall -I../include/core -I../include/factory -I../include/losses -I../include/models/supervised -I../include/models/unsupervised -I../include/optimizers -I../include/utils -I../include/models/
 
 CORE_OBJS = core/matrix.o
 LOSS_OBJS = losses/mse.o losses/mae.o
@@ -39,5 +39,6 @@ clean:
 
 run: ml_train
 	./ml_train
+	rm -f $(ALL_OBJS) ml_train
 
 .PHONY: all clean run

@@ -1,4 +1,4 @@
-#include "../../include/optimizers/sgd.h"
+#include "sgd.h"
 
 void SGD::update(Matrix& weights, Matrix gradients) {
     for (int i = 0; i < weights.rows; i++) {
