@@ -25,3 +25,8 @@ make clean
 ```
 https://www.qt.io/development/download-qt-installer
 ```
+
+---
+
+# Current State of Project
+<img width="1440" height="900" alt="Image" src="https://github.com/user-attachments/assets/be9c41e8-e525-42b5-9893-f2d0bb664482" />
