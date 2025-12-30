@@ -18,7 +18,7 @@ public:
 
     double getCurrentLoss();
 
-    Q_INVOKABLE void startTraining(); //Q_INVOKABLE tells Qt that "QML can directly call this function"
+    Q_INVOKABLE void startTraining(int modelChoice,int optimizerChoice,int lossChoice,double learningRate,int epochs); //Q_INVOKABLE tells Qt that "QML can directly call this function"
 
 signals:
     //signal declarations

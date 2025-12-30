@@ -40,39 +40,15 @@ void createLinearDataset(Matrix& X, Matrix& y) {
     }
 }
 
-/* ---------- Menus ---------- */
-int supervisedModelMenu() {
-    return 1;
-}
-
-int optimizerMenu() {
-    return 1;
-}
-
-int lossMenu() {
-    return 1;
-}
-
 /* ---------- Main Program ---------- */
-void Bridge::startTraining() {
-    QtConcurrent::run([this](){ //Run this code in different thread
+void Bridge::startTraining(int modelChoice,int optimizerChoice,int lossChoice,double learningRate,int epochs){
+    //have to pass the parameters again to the thread
+    QtConcurrent::run([this,modelChoice,optimizerChoice,lossChoice,learningRate,epochs](){ //Run this code in different thread
 
-
-        /* ---------- Model Selection ---------- */
-        int modelChoice = supervisedModelMenu();
         Model* model = ModelFactory::createSupervisedModel(modelChoice, 1);
 
-        /* ---------- Optimizer Selection ---------- */
-        int optChoice = optimizerMenu();
-        double lr;
+        Optimizer* optimizer = OptimizerFactory::create(optimizerChoice, learningRate);
         
-        lr = 0.01; //hardcoded
-
-        Optimizer* optimizer = OptimizerFactory::create(optChoice, lr);
-        
-
-        /* ---------- Loss Selection ---------- */
-        int lossChoice = lossMenu();
         Loss* loss = LossFactory::create(lossChoice);
 
         /* ---------- Dataset ---------- */
@@ -80,9 +56,6 @@ void Bridge::startTraining() {
         Matrix X(samples, 1);
         Matrix y(samples, 1);
         createLinearDataset(X, y); //hmmmmm
-
-        int epochs;
-        epochs = 2000; //hardcoded
 
         /* ---------- Training ---------- */
         cout << "\n========================================\n";
