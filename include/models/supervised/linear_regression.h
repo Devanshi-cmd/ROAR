@@ -6,6 +6,7 @@
 #include "loss.h"
 #include "supervised_model.h"
 #include <vector>
+#include <functional>
 
 class LinearRegression : public SupervisedModel
 {
@@ -26,7 +27,9 @@ public:
         Optimizer *optimizer,
         Loss *loss,
         int epochs,
-        bool verbose = true) override;
+        bool verbose = true,
+        std::function<void(int,double)> callback = NULL
+    ) override;
 
     const char *getName() const override;
 

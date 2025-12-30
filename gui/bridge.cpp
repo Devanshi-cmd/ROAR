@@ -1,0 +1,113 @@
+#include "bridge.h"
+#include <functional>
+
+#include <iostream>
+#include <limits>
+#include "matrix.h"
+#include "model_factory.h"
+#include "optimizer_factory.h"
+#include "loss_factory.h"
+
+Bridge::Bridge(QObject *parent){ //Constructor for bridge obj
+    m_currentEpoch = 0;
+    m_currentLoss = 0.0;
+}
+
+int Bridge::getCurrentEpoch(){
+    return m_currentEpoch;
+}
+
+double Bridge::getCurrentLoss(){
+    return m_currentLoss;
+}
+
+///THE MENUE
+
+using namespace std;
+
+/* ---------- Utility ---------- */
+void clearInput() {
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+/* ---------- Dataset ---------- */
+void createLinearDataset(Matrix& X, Matrix& y) {
+    for (int i = 0; i < X.rows; i++) {
+        double x = i * 0.1;
+        X.set(i, 0, x);
+        y.set(i, 0, 2.0 * x + 3.0);
+    }
+}
+
+/* ---------- Menus ---------- */
+int supervisedModelMenu() {
+    return 1;
+}
+
+int optimizerMenu() {
+    return 1;
+}
+
+int lossMenu() {
+    return 1;
+}
+
+/* ---------- Main Program ---------- */
+void Bridge::startTraining() {
+    QtConcurrent::run([this](){ //Run this code in different thread
+
+
+        /* ---------- Model Selection ---------- */
+        int modelChoice = supervisedModelMenu();
+        Model* model = ModelFactory::createSupervisedModel(modelChoice, 1);
+
+        /* ---------- Optimizer Selection ---------- */
+        int optChoice = optimizerMenu();
+        double lr;
+        
+        lr = 0.01; //hardcoded
+
+        Optimizer* optimizer = OptimizerFactory::create(optChoice, lr);
+        
+
+        /* ---------- Loss Selection ---------- */
+        int lossChoice = lossMenu();
+        Loss* loss = LossFactory::create(lossChoice);
+
+        /* ---------- Dataset ---------- */
+        int samples = 100;
+        Matrix X(samples, 1);
+        Matrix y(samples, 1);
+        createLinearDataset(X, y); //hmmmmm
+
+        int epochs;
+        epochs = 2000; //hardcoded
+
+        /* ---------- Training ---------- */
+        cout << "\n========================================\n";
+        cout << "Training Started\n";
+        cout << "Model     : " << model->getName() << "\n";
+        cout << "Optimizer : " << optimizer->getName() << "\n";
+        cout << "Loss      : " << loss->getName() << "\n";
+        cout << "========================================\n";
+
+        //create lembda that captures 'this'
+        auto callback = [this](int epoch, double loss){
+            m_currentEpoch = epoch;
+            m_currentLoss = loss;
+            emit trainingProgressChanged(); //emit signal
+        };
+
+        model->train(X, y, optimizer, loss, epochs, true,callback); //to start training model
+
+        /* ---------- Cleanup ---------- */
+        delete model;
+        delete optimizer;
+        delete loss;
+
+        cout << "\nExperiment completed.\n";
+
+        return;
+    });
+}

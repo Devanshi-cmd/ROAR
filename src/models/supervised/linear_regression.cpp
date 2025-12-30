@@ -20,7 +20,7 @@ Matrix LinearRegression::predict(Matrix X) {
     return predictions;
 }
 
-void LinearRegression::train(Matrix X, Matrix y, Optimizer* optimizer, Loss* loss, int epochs, bool verbose) {
+void LinearRegression::train(Matrix X, Matrix y, Optimizer* optimizer, Loss* loss, int epochs, bool verbose,std::function<void(int,double)> callback){
     int n = X.rows;
     
     if (verbose) {
@@ -63,8 +63,12 @@ void LinearRegression::train(Matrix X, Matrix y, Optimizer* optimizer, Loss* los
         
         // Print progress
         if (verbose && (epoch % 100 == 0 || epoch == epochs - 1)) {
-            cout << "Epoch " << setw(4) << epoch 
-                 << " | Loss: " << fixed << setprecision(6) << loss_val << endl;
+            cout << "Epoch " << setw(4) << epoch << " | Loss: " << fixed << setprecision(6) << loss_val << endl;
+        }
+
+        //callback to update GUI
+        if((epoch % 100 == 0 || epoch == epochs - 1) && callback){ //std::function has bool operator
+            callback(epoch,loss_val);
         }
     }
     

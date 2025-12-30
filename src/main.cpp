@@ -62,7 +62,7 @@ int main() {
     cout << "========================================\n";
 
     while (true) {
-
+        //selecting type (irrelevent as we only have supervised learning)
         cout << "\nSelect Model Type:\n";
         cout << "1. Supervised Learning\n";
         cout << "2. Exit\n";
@@ -122,7 +122,7 @@ int main() {
         int samples = 100;
         Matrix X(samples, 1);
         Matrix y(samples, 1);
-        createLinearDataset(X, y);
+        createLinearDataset(X, y); //hmmmmm
 
         int epochs;
         cout << "\nEnter number of epochs: ";
@@ -136,7 +136,7 @@ int main() {
         cout << "Loss      : " << loss->getName() << "\n";
         cout << "========================================\n";
 
-        model->train(X, y, optimizer, loss, epochs, true);
+        model->train(X, y, optimizer, loss, epochs, true); //to start training model
 
         /* ---------- Prediction ---------- */
         Matrix testX(1, 1);
