@@ -14,8 +14,7 @@
 #include <QtDataVisualization/QSurfaceDataProxy>
 #include <QtDataVisualization/QSurface3DSeries>
 
-QSurfaceDataArray *generateDummyData();
-
+QSurfaceDataArray *generateDummyMLData();
 
 
 Bridge::Bridge(QObject *parent){ //Constructor for bridge obj
@@ -23,7 +22,7 @@ Bridge::Bridge(QObject *parent){ //Constructor for bridge obj
     m_currentLoss = 0.0;
 
     m_dataProxy = new QSurfaceDataProxy(); //create array for surface data
-    m_dataProxy->resetArray(generateDummyData()); //fill the array with dummy data
+    m_dataProxy->resetArray(generateDummyMLData()); //fill the array with dummy data
 }
 
 int Bridge::getCurrentEpoch(){
@@ -101,23 +100,53 @@ void Bridge::startTraining(int modelChoice,int optimizerChoice,int lossChoice,do
 // --- SURFACE GENERATION FOR VISUALIZATION ---
 
 
-QSurfaceDataArray *generateDummyData() { //for dummy data
+ Matrix predict(Matrix X,float weight,float bias) { //TO PREDICT
+    // y_pred = X * weights + bias
+    Matrix predictions = X.multiplyScalar(weight);
+    
+    // Add bias to each prediction
+    for (int i = 0; i < predictions.rows; i++) {
+        predictions.data[i][0] += bias;
+    }
+    
+    return predictions;
+}
+
+double compute(Matrix predictions, Matrix targets) { //to calculate loss
+    int n = predictions.rows;
+    double sum = 0.0;
+    
+    for (int i = 0; i < n; i++) {
+        double error = predictions.get(i, 0) - targets.get(i, 0);
+        sum += abs(error);
+    }
+    
+    return sum / n;
+}
+
+QSurfaceDataArray *generateDummyMLData() { //for dummy data
     QSurfaceDataArray *data = new QSurfaceDataArray;
+
+     /* ---------- Dataset ---------- */
+        int samples = 100;
+        Matrix X(samples, 1);
+        Matrix y(samples, 1);
+        createLinearDataset(X, y); //hmmmmm
     
     // Example: 100 rows (Z/bias), 100 columns (X/weight)
     for (int row = 0; row < 100; row++) {
         QSurfaceDataRow *newRow = new QSurfaceDataRow;
         
         for (int col = 0; col < 100; col++) {
-            // Center the grid at (50, 50) and scale
-            float x = (col - 50) * 0.3;  // X-axis (weight)
-            float z = (row - 50) * 0.3;  // Z-axis (bias)
             
-            // Simple paraboloid: y = x² + z²
-            float y = (x*x + z*z)* 0.1;         // Y-axis (loss)
+            float weight = (col-50) * 0.1;  // X-axis (weight) (-5 to 5)
+            float bias = (row-50) * 0.1;  // Z-axis (bias)
 
+            Matrix predictions = predict(X,weight,bias);
             
-            (*newRow) << QSurfaceDataItem(QVector3D(x, y, z));
+            double loss = compute(predictions, y);  // Y-axis (loss)
+
+            (*newRow) << QSurfaceDataItem(QVector3D(weight, loss, bias));
         }
         
         *data << newRow;

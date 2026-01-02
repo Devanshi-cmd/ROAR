@@ -31,14 +31,14 @@ ApplicationWindow {
         //Axis Config
         axisX: ValueAxis3D{
             title: "Weight"
-            min: -100
-            max: 100
+            min: -5
+            max: 5
         }
 
         axisZ: ValueAxis3D{
             title: "Bias"
-            min: -100
-            max: 100
+            min: -5
+            max: 5
         }
 
         axisY: ValueAxis3D{
@@ -52,18 +52,27 @@ ApplicationWindow {
             // id: surfaceSeries
             dataProxy: bridge.surfaceData
 
+            //styling
+            drawMode: Surface3Dseries.DrawSurface
+            flatShadingEnabled: false
+            meshSmooth: true
+
             // baseColor: "red"  // Simple single color test
 
             // Set the color style first
             colorStyle: Theme3D.ColorStyleObjectGradient 
 
+            // baseGradient: ColorGradient {
+            //     ColorGradientStop { position: 0.0; color: "blue" }
+            //     ColorGradientStop { position: 1.0; color: "red" }
+            // }
+
             baseGradient: ColorGradient {
-                ColorGradientStop { position: 0.0; color: "blue" }
-                ColorGradientStop { position: 1.0; color: "red" }
+                ColorGradientStop { position: 0.0; color: "#0000ff" }  // Blue (low)
+                ColorGradientStop { position: 0.33; color: "#00ff00" } // Green
+                ColorGradientStop { position: 0.66; color: "#ffff00" } // Yellow
+                ColorGradientStop { position: 1.0; color: "#ff0000" }  // Red (high)
             }
-            //styling
-            flatShadingEnabled: false
-            drawMode: Surface3Dseries.DrawSurface
 
         }
     }
