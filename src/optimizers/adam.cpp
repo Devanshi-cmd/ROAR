@@ -19,7 +19,7 @@ void Adam::update(Matrix& weights, Matrix gradients) {
     
     t++;
     
-    double beta1 = 0.9;
+    double beta1 = 0.9; //HARDCODED
     double beta2 = 0.999;
     double epsilon = 1e-8;
     

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(ROAR)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Concurrent) #all packages we are using in Qt
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Concurrent DataVisualization) #all packages we are using in Qt
 
 set(CMAKE_AUTOMOC ON) #cmake will need to generate some code itself
 
@@ -29,6 +29,7 @@ include_directories( #header files
 
 set(QML_FILES
     main.qml
+    plot3D.qml
 )
 
 qt_add_executable(ROAR_GUI #create a executable with all source files
@@ -47,4 +48,5 @@ target_link_libraries(ROAR_GUI PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::Concurrent
+    Qt6::DataVisualization
 )

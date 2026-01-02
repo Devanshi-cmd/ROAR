@@ -1,5 +1,6 @@
 #include "bridge.h"
 #include <functional>
+#include <cmath> 
 
 #include <iostream>
 #include <limits>
@@ -8,9 +9,21 @@
 #include "optimizer_factory.h"
 #include "loss_factory.h"
 
+//the Qt includes (for 3D plot)
+#include <QtDataVisualization/Q3DSurface>
+#include <QtDataVisualization/QSurfaceDataProxy>
+#include <QtDataVisualization/QSurface3DSeries>
+
+QSurfaceDataArray *generateDummyData();
+
+
+
 Bridge::Bridge(QObject *parent){ //Constructor for bridge obj
     m_currentEpoch = 0;
     m_currentLoss = 0.0;
+
+    m_dataProxy = new QSurfaceDataProxy(); //create array for surface data
+    m_dataProxy->resetArray(generateDummyData()); //fill the array with dummy data
 }
 
 int Bridge::getCurrentEpoch(){
@@ -83,4 +96,32 @@ void Bridge::startTraining(int modelChoice,int optimizerChoice,int lossChoice,do
 
         return;
     });
+}
+
+// --- SURFACE GENERATION FOR VISUALIZATION ---
+
+
+QSurfaceDataArray *generateDummyData() { //for dummy data
+    QSurfaceDataArray *data = new QSurfaceDataArray;
+    
+    // Example: 100 rows (Z/bias), 100 columns (X/weight)
+    for (int row = 0; row < 100; row++) {
+        QSurfaceDataRow *newRow = new QSurfaceDataRow;
+        
+        for (int col = 0; col < 100; col++) {
+            // Center the grid at (50, 50) and scale
+            float x = (col - 50) * 0.3;  // X-axis (weight)
+            float z = (row - 50) * 0.3;  // Z-axis (bias)
+            
+            // Simple paraboloid: y = x² + z²
+            float y = (x*x + z*z)* 0.1;         // Y-axis (loss)
+
+            
+            (*newRow) << QSurfaceDataItem(QVector3D(x, y, z));
+        }
+        
+        *data << newRow;
+    }
+    
+    return data;
 }

@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import ROAR
+import QtDataVisualization
 
 ApplicationWindow {
     visible: true

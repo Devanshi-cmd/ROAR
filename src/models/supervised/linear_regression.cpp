@@ -67,7 +67,7 @@ void LinearRegression::train(Matrix X, Matrix y, Optimizer* optimizer, Loss* los
         }
 
         //callback to update GUI
-        if((epoch % 100 == 0 || epoch == epochs - 1) && callback){ //std::function has bool operator
+        if((epoch % 100 == 0 || epoch == epochs - 1) && callback){ //std::function has bool operator (if function is passed or not)
             callback(epoch,loss_val);
         }
     }

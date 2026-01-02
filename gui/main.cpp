@@ -11,7 +11,8 @@ int main(int argc, char *argv[]){
     Bridge bridge; //create bridge obj
 
     engine.rootContext()->setContextProperty("bridge", &bridge); //Expose bridge to QML, so .qml files can acess the object's properties
-    engine.load(QUrl(QStringLiteral("qrc:/ROAR/main.qml"))); //load main.qml
+    // engine.load(QUrl(QStringLiteral("qrc:/ROAR/main.qml"))); //load main.qml
+    engine.load(QUrl(QStringLiteral("qrc:/ROAR/plot3D.qml"))); //load main.qml
     /*
     qrc: means Qt Resource - embedded files
     /qt/qml/ROAR from CMake "URI ROAR"
