@@ -29,6 +29,5 @@ https://www.qt.io/development/download-qt-installer
 ---
 
 # Current State of Project
-<img width="1302" height="780" alt="Image" src="https://github.com/user-attachments/assets/1364bb9c-1dac-4bb4-9325-fe9cf7abf989" />
 
-<img width="1302" height="780" alt="Image" src="https://github.com/user-attachments/assets/0ec55e60-060e-4b9c-8c62-d8fe16fccf65" />
+<img width="1302" height="780" alt="Image" src="https://github.com/user-attachments/assets/fdca172c-3754-45b0-a052-3677208bd7c4" />

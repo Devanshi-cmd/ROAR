@@ -4,10 +4,12 @@ project(ROAR)
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Concurrent DataVisualization) #all packages we are using in Qt
 
 set(CMAKE_AUTOMOC ON) #cmake will need to generate some code itself
+set(CMAKE_AUTORCC ON) #for rcc files
 
 set(SOURCES
     main.cpp
     bridge.cpp
+    resources.qrc
     ../src/models/supervised/linear_regression.cpp
     ../src/core/matrix.cpp
     ../src/losses/mae.cpp

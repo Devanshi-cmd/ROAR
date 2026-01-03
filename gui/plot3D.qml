@@ -53,7 +53,7 @@ ApplicationWindow {
             dataProxy: bridge.surfaceData
 
             //styling
-            drawMode: Surface3Dseries.DrawSurface
+            drawMode: Surface3DSeries.DrawSurface
             flatShadingEnabled: false
             meshSmooth: true
 
@@ -73,7 +73,14 @@ ApplicationWindow {
                 ColorGradientStop { position: 0.66; color: "#ffff00" } // Yellow
                 ColorGradientStop { position: 1.0; color: "#ff0000" }  // Red (high)
             }
+        }
 
+        // ADD SCATTER POINTS AS CUSTOM ITEMS
+        Component.onCompleted: {
+            var points = bridge.getTrajectoryPoints();
+            for (var i = 0; i < points.length; i++) {
+                surfacePlot.addCustomItem(points[i]);
+            }
         }
     }
 }

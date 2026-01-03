@@ -8,3 +8,4 @@ ml_train
 # VS Code
 .vscode/
 /gui/build
+*.obj

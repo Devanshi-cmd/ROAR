@@ -13,6 +13,7 @@
 #include <QtDataVisualization/Q3DSurface>
 #include <QtDataVisualization/QSurfaceDataProxy>
 #include <QtDataVisualization/QSurface3DSeries>
+#include <QtDataVisualization/QCustom3DItem>
 
 QSurfaceDataArray *generateDummyMLData();
 
@@ -153,4 +154,94 @@ QSurfaceDataArray *generateDummyMLData() { //for dummy data
     }
     
     return data;
+}
+
+// QVector<QCustom3DItem*> Bridge::getTrajectoryPoints() {//for plotting points
+//     QVector<QCustom3DItem*> items;
+    
+//     // Example: 5 scatter points
+//     for (int i = 0; i < 1000; i++) {
+//         float x = (rand() % 100 - 50) * 0.2f;
+//         float z = (rand() % 100 - 50) * 0.2f;
+//         float y = (x*x + z*z) * 0.1f + 5.0f;
+        
+//         // Create a custom sphere item
+//         QCustom3DItem *sphere = new QCustom3DItem();
+//         sphere->setMeshFile(":/mesh/meshes/ball.obj");  // Qt's built-in sphere mesh
+//         sphere->setPosition(QVector3D(x, y, z));
+//         sphere->setScaling(QVector3D(0.03f, 0.03f, 0.03f));  // Size
+        
+//         items.append(sphere);
+//     }
+    
+//     return items;
+// }
+
+
+Matrix predict2(Matrix X, Matrix weights, double bias) {
+    // y_pred = X * weights + bias
+    Matrix predictions = X.multiply(weights);
+    
+    // Add bias to each prediction
+    for (int i = 0; i < predictions.rows; i++) {
+        predictions.data[i][0] += bias;
+    }
+    
+    return predictions;
+}
+
+QVector<QCustom3DItem*> Bridge::getTrajectoryPoints() {//for plotting points
+    QVector<QCustom3DItem*> items;
+
+    /* ---------- Dataset ---------- */
+    int samples = 100;
+    Matrix X(samples, 1);
+    Matrix y(samples, 1);
+    createLinearDataset(X, y); //hmmmmm
+
+    Matrix weights(1,1);
+    double bias;
+
+    weights.fillRandom();
+    bias = 0.0;
+
+    double learning_rate = 0.1;
+
+    Optimizer* optimizer = OptimizerFactory::create(2, learning_rate); //adam
+    Loss* loss = LossFactory::create(2); //MAE
+    
+    for (int epoch = 0; epoch < 1000; epoch++) { //for 1000 epoch
+        // Forward pass
+        Matrix predictions = predict2(X,weights,bias);
+        
+        // Compute loss
+        double loss_val = loss->compute(predictions, y);
+        
+        // Backward pass - compute gradients
+        Matrix loss_grad = loss->gradient(predictions, y);
+        
+        // Weight gradient: X^T * loss_grad
+        Matrix X_T = X.transpose();
+        Matrix weight_grad = X_T.multiply(loss_grad);
+        
+        // Bias gradient: sum of loss_grad
+        double bias_grad = 0.0;
+        for (int i = 0; i < loss_grad.rows; i++) {
+            bias_grad += loss_grad.get(i, 0);
+        }
+        
+        // Update parameters
+        optimizer->update(weights, weight_grad);
+        optimizer->updateBias(bias, bias_grad);
+        
+        // Create a custom sphere item
+        QCustom3DItem *sphere = new QCustom3DItem();
+        sphere->setMeshFile(":/mesh/meshes/ball.obj");  // Qt's built-in sphere mesh
+        sphere->setPosition(QVector3D(weights.get(0,0), loss_val, bias));
+        sphere->setScaling(QVector3D(0.03f, 0.03f, 0.03f));  // Size
+        
+        items.append(sphere);
+    }
+    
+    return items;
 }

@@ -4,13 +4,13 @@
 #include <QObject>
 #include <QtConcurrent>
 #include <QtDataVisualization/QSurfaceDataProxy> 
+#include <QtDataVisualization/QCustom3DItem>
 
 class Bridge : public QObject{
     Q_OBJECT //QT's magic macro, must be first line after class decclaration
 
     Q_PROPERTY(QSurfaceDataProxy* surfaceData READ getSurfaceData CONSTANT); //expose surface data to qml
-
-
+    
     Q_PROPERTY(int currentEpoch READ getCurrentEpoch NOTIFY trainingProgressChanged); //how qml talks to cpp
     Q_PROPERTY(double currentLoss READ getCurrentLoss NOTIFY trainingProgressChanged);
 
@@ -23,6 +23,8 @@ public:
     double getCurrentLoss();
 
     QSurfaceDataProxy* getSurfaceData() { return m_dataProxy; } //getter to get surface data
+
+    Q_INVOKABLE QVector<QCustom3DItem*> getTrajectoryPoints(); //for plotting points
 
     Q_INVOKABLE void startTraining(int modelChoice,int optimizerChoice,int lossChoice,double learningRate,int epochs); //Q_INVOKABLE tells Qt that "QML can directly call this function"
 

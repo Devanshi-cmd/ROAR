@@ -1,0 +1,6 @@
+<!DOCTYPE RCC>
+<RCC>
+    <qresource prefix="/mesh">
+        <file>meshes/ball.obj</file>
+    </qresource>
+</RCC>
